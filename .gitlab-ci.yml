@@ -18,7 +18,7 @@ build:image:
     - shell-executor
     - docker
   script:
-    - docker build -t $BUILD_IMAGE wordpress-base
+    - docker build --pull -t $BUILD_IMAGE wordpress-base
     - docker push $BUILD_IMAGE
 
 release:image:
