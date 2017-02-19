@@ -1,5 +1,6 @@
 FROM php:5.6-apache
-MAINTAINER tuschl@digitalmobil.com
+
+ENV HTTPD_DOCUMENT_ROOT /var/www
 
 # Enable Apache Rewrite Module
 RUN a2enmod rewrite
@@ -21,7 +22,7 @@ RUN { \
         echo 'max_execution_time = 90';             \ 
         echo 'upload_max_filesize = 16M';           \
         echo 'post_max_size = 16M';                 \
-    } > /usr/local/etc/php/conf.d/wordpress.ini 
+    } > $PHP_INI_DIR/conf.d/wordpress.ini 
     
 # set recommended PHP.ini settings
 # see https://secure.php.net/manual/en/opcache.installation.php
@@ -32,9 +33,9 @@ RUN { \
         echo 'opcache.revalidate_freq=60'; \
         echo 'opcache.fast_shutdown=1'; \
         echo 'opcache.enable_cli=1'; \
-    } > /usr/local/etc/php/conf.d/opcache-recommended.ini
+    } > $PHP_INI_DIR/conf.d/opcache-recommended.ini
 
-WORKDIR /var/www
+WORKDIR $HTTPD_DOCUMENT_ROOT
 
 CMD ["apache2-foreground"]
 
