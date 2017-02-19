@@ -17,7 +17,7 @@ build:image:php5.6-apache:
     - shell-executor
     - docker
   script:
-    - docker build --pull -t $BUILD_IMAGE -f php5.6-apache/Dockerfile .
+    - docker build --pull -t $BUILD_IMAGE php5.6-apache
     - docker push $BUILD_IMAGE
     - docker tag $BUILD_IMAGE $LEGACY_IMAGE
     - docker push $LEGACY_IMAGE
@@ -32,7 +32,7 @@ build:image:php5.6-apache-alpine:
     - shell-executor
     - docker
   script:
-    - docker build --pull -t $BUILD_IMAGE -f php5.6-apache-alpine/Dockerfile .
+    - docker build --pull -t $BUILD_IMAGE php5.6-apache-alpine
     - docker push $BUILD_IMAGE
 
 release:image:
