@@ -68,7 +68,7 @@ RUN { \
         echo 'opcache.enable_cli=1'; \
     } > $PHP_INI_DIR/conf.d/opcache-recommended.ini
 
-COPY php5.6-apache-alpine/httpd-foreground /usr/local/bin/
+COPY httpd-foreground /usr/local/bin/
 
 WORKDIR $HTTPD_DOCUMENT_ROOT
 
