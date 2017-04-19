@@ -1,7 +1,8 @@
 FROM alpine:3.5
 
 ENV PHP_INI_DIR /etc/php5
-ENV HTTPD_DOCUMENT_ROOT /var/www/localhost/htdocs
+ENV HTTPD_ROOT /var/www/localhost
+ENV HTTPD_DOCUMENT_ROOT $HTTPD_ROOT/htdocs
 
 # ensure www-data user exists
 RUN set -x \
@@ -38,8 +39,8 @@ RUN set -xe; \
         php5-intl \
         php5-opcache \
     && mkdir -p /run/apache2 \
-    && chown -R www-data:www-data $HTTPD_DOCUMENT_ROOT \
-    && chmod g+ws $HTTPD_DOCUMENT_ROOT \
+    && chown -R www-data:www-data $HTTPD_ROOT \
+    && chmod g+ws $HTTPD_ROOT \
     && rm $HTTPD_DOCUMENT_ROOT/index.html \
     && sed -ri \
         -e 's!^(\s*CustomLog)\s+\S+!\1 /proc/self/fd/1!g' \
@@ -70,7 +71,7 @@ RUN { \
 
 COPY httpd-foreground /usr/local/bin/
 
-WORKDIR $HTTPD_DOCUMENT_ROOT
+WORKDIR $HTTPD_ROOT
 
 EXPOSE 80
 CMD ["httpd-foreground"]
