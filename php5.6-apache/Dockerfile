@@ -23,6 +23,8 @@ RUN { \
         echo 'max_execution_time = 90';             \ 
         echo 'upload_max_filesize = 16M';           \
         echo 'post_max_size = 16M';                 \
+        echo 'log_errors = On';                     \
+        echo 'error_log = "/var/www/php.log"';      \
     } > $PHP_INI_DIR/conf.d/wordpress.ini 
     
 # set recommended PHP.ini settings
