@@ -37,6 +37,7 @@ RUN set -xe; \
         php5-gd \
         php5-intl \
         php5-opcache \
+        php5-soap \
     && mkdir -p /run/apache2 \
     && chown -R www-data:www-data $HTTPD_DOCUMENT_ROOT \
     && chmod g+ws $HTTPD_DOCUMENT_ROOT \
