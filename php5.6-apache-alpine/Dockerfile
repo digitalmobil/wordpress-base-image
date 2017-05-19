@@ -1,7 +1,6 @@
 FROM alpine:3.5
 
 ENV PHP_INI_DIR /etc/php5
-ENV HTTPD_DOCUMENT_ROOT /var/www/localhost/htdocs
 
 # ensure www-data user exists
 RUN set -x \
@@ -37,16 +36,33 @@ RUN set -xe; \
         php5-gd \
         php5-intl \
         php5-opcache \
-        php5-soap \
-    && mkdir -p /run/apache2 \
-    && chown -R www-data:www-data $HTTPD_DOCUMENT_ROOT \
-    && chmod g+ws $HTTPD_DOCUMENT_ROOT \
-    && rm $HTTPD_DOCUMENT_ROOT/index.html \
+        php5-soap
+
+RUN mkdir -p /run/apache2 \
+    && mv /var/www/localhost/htdocs /var/www/web \
+    && chown -R www-data:www-data /var/www/web \
+    && chmod g+ws /var/www/web \
+    && rm /var/www/web/index.html \
+    && rm -Rf /var/www/localhost \
     && sed -ri \
         -e 's!^(\s*CustomLog)\s+\S+!\1 /proc/self/fd/1!g' \
         -e 's!^(\s*ErrorLog)\s+\S+!\1 /proc/self/fd/2!g' \
         -e 's!^#LoadModule rewrite_module!LoadModule rewrite_module!' \
-        "/etc/apache2/httpd.conf" 
+        -e 's!/var/www/localhost/htdocs!/var/www/web!g' \
+        -e 's!/var/www/localhost!/var/www!g' \
+        "/etc/apache2/httpd.conf" \
+    && rm /etc/apache2/conf.d/info.conf \
+    && rm /etc/apache2/conf.d/userdir.conf \
+    && { \
+        echo 'ServerTokens Prod'; \
+        echo 'ServerSignature Off'; \
+        echo 'DocumentRoot "/var/www/web"'; \
+        echo '<Directory "/var/www/web">'; \
+        echo '    Options None'; \
+        echo '    AllowOverride All'; \
+        echo '    Require all granted'; \
+        echo '</Directory>'; \
+    } > /etc/apache2/conf.d/ZZ_wordpress
 
 RUN { \
         echo 'date.timezone = "Europe/Berlin"';     \
@@ -71,10 +87,10 @@ RUN { \
         echo 'opcache.enable_cli=1'; \
     } > $PHP_INI_DIR/conf.d/opcache-recommended.ini
 
-COPY httpd-foreground /usr/local/bin/
+COPY apache2-foreground /usr/local/bin/
 
-WORKDIR $HTTPD_DOCUMENT_ROOT
+WORKDIR /var/www
 
 EXPOSE 80
-CMD ["httpd-foreground"]
+CMD ["apache2-foreground"]
 

@@ -1,6 +1,7 @@
 FROM php:5.6-apache
 
-ENV HTTPD_DOCUMENT_ROOT /var/www
+RUN mv /var/www/html /var/www/web \
+    && sed -ri "s%/var/www/html%/var/www/web%g" /etc/apache2/sites-available/* /etc/apache2/apache2.conf
 
 # Enable Apache Rewrite Module
 RUN a2enmod rewrite
@@ -38,7 +39,7 @@ RUN { \
         echo 'opcache.enable_cli=1'; \
     } > $PHP_INI_DIR/conf.d/opcache-recommended.ini
 
-WORKDIR $HTTPD_DOCUMENT_ROOT
+WORKDIR /var/www
 
 CMD ["apache2-foreground"]
 
