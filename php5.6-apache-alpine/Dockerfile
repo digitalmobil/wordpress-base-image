@@ -40,7 +40,7 @@ RUN set -xe; \
 
 RUN mkdir -p /run/apache2 \
     && mv /var/www/localhost/htdocs /var/www/web \
-    && chown -R www-data:www-data /var/www/web \
+    && chown -R www-data:www-data /var/www \
     && chmod g+ws /var/www/web \
     && rm /var/www/web/index.html \
     && rm -Rf /var/www/localhost \
