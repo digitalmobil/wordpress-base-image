@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y --force-yes --no-install-recommends \
 	libc-client-dev libicu-dev libmcrypt-dev libssl-dev libpng12-dev libjpeg-dev \
     libxml2-dev \
     unzip zip \
+    less \
 	&& rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/Users
