@@ -36,6 +36,10 @@ RUN set -xe; \
         php5-gd \
         php5-intl \
         php5-opcache \
+        php5-bz2 \
+        php5-zlib \
+        php5-phar \
+        php5-zip \
         php5-soap
 
 RUN mkdir -p /run/apache2 \
