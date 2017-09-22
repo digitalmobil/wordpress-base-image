@@ -4,7 +4,7 @@ RUN mv /var/www/html /var/www/web \
     && sed -ri "s%/var/www/html%/var/www/web%g" /etc/apache2/sites-available/* /etc/apache2/apache2.conf
 
 # Enable Apache Rewrite Module
-RUN a2enmod rewrite
+RUN a2enmod rewrite expires
 
 RUN apt-get update && apt-get install -y --force-yes --no-install-recommends \
 	libc-client-dev libicu-dev libmcrypt-dev libssl-dev libpng12-dev libjpeg-dev \

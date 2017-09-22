@@ -52,6 +52,7 @@ RUN mkdir -p /run/apache2 \
         -e 's!^(\s*CustomLog)\s+\S+!\1 /proc/self/fd/1!g' \
         -e 's!^(\s*ErrorLog)\s+\S+!\1 /proc/self/fd/2!g' \
         -e 's!^#LoadModule rewrite_module!LoadModule rewrite_module!' \
+        -e 's!^#LoadModule expires_module!LoadModule expires_module!' \
         -e 's!/var/www/localhost/htdocs!/var/www/web!g' \
         -e 's!/var/www/localhost!/var/www!g' \
         "/etc/apache2/httpd.conf" \
