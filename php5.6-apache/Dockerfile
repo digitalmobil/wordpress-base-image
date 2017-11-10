@@ -3,7 +3,8 @@ FROM php:5.6-apache
 RUN mv /var/www/html /var/www/web \
     && sed -ri "s%/var/www/html%/var/www/web%g" /etc/apache2/sites-available/* /etc/apache2/apache2.conf \
     && sed -i '/^#AddDefaultCharset.*$/a AddType text/html;charset=utf-8 html' /etc/apache2/conf-enabled/charset.conf \
-    && sed -i '/^#AddDefaultCharset.*$/a AddCharset UTF-8 html' /etc/apache2/conf-enabled/charset.conf
+    && sed -i '/^#AddDefaultCharset.*$/a AddCharset UTF-8 html' /etc/apache2/conf-enabled/charset.conf \
+    && echo "umask 002" > /etc/apache2/conf-available/envvars
 
 # Enable Apache Rewrite Module
 RUN a2enmod rewrite expires
