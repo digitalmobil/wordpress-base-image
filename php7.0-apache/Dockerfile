@@ -10,7 +10,7 @@ RUN mv /var/www/html /var/www/web \
 RUN a2enmod rewrite expires
 
 RUN apt-get update && apt-get install -y --force-yes --no-install-recommends \
-	libc-client-dev libicu-dev libmcrypt-dev libssl-dev libpng12-dev libjpeg-dev \
+	libc-client-dev libicu-dev libmcrypt-dev libssl-dev libpng-dev libjpeg-dev \
     libxml2-dev \
     unzip zip gzip \
     less \
