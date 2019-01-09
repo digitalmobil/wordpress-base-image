@@ -22,7 +22,7 @@ RUN docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr && \
 RUN { \
         echo 'date.timezone = "Europe/Berlin"';     \
         echo 'memory_limit = 1024M';                \
-        echo 'max_execution_time = 180';            \
+        echo 'max_execution_time = 90';            \
         echo 'upload_max_filesize = 30M';           \
         echo 'post_max_size = 32M';                 \
         echo 'log_errors = On';                     \
