@@ -16,11 +16,13 @@ RUN apt-get update && apt-get install -y --force-yes --no-install-recommends \
 
 RUN docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr && \
     docker-php-ext-install -j$(nproc)   \
-        intl mysqli pdo_mysql           \
-        opcache soap zip phar
+        intl mbstring mysqli pdo pdo_mysql           \
+        gd opcache soap zip phar
 
 RUN { \
         echo 'date.timezone = "Europe/Berlin"';     \
+	echo 'zlib.output_compression = On';        \
+	echo 'zlib.output_compression_level = 6';   \
         echo 'memory_limit = 1024M';                \
         echo 'max_execution_time = 90';            \
         echo 'upload_max_filesize = 30M';           \
